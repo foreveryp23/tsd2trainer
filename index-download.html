@@ -45,9 +45,9 @@
 </script></head>
 <body>
   <div class="wrap">
-    <h1>吞食训练所 v2.2.46</h1>
+    <h1>吞食训练所 v2.2.47</h1>
     <p>
-      <span class="badge">v2.2.46</span>
+      <span class="badge">v2.2.47</span>
       <span class="badge">包名 com.fanmade.tsd2trainerv4</span>
       <span class="badge">签名 tsd2（apksigner v1+v2+v3）</span>
     </p>
@@ -60,7 +60,7 @@
     </div>
 
     <p>
-      <a class="btn" href="https://foreveryp23.github.io/tsd2trainer/tsd2-trainer-formation-v2.2.46.apk" download>📥 下载吞食训练所 v2.2.46 APK（全新包名·可与旧版并存，约 11.2 MB）<span style="display:inline-block;margin-left:10px;padding-left:10px;border-left:1px solid rgba(255,255,255,.28);font-size:12px;font-weight:400;color:rgba(255,255,255,.82);white-space:nowrap">已被下载 <b id="tsd2-dl-count" style="color:#ffd24a">…</b> 次 · 历史累计</span></a>
+      <a class="btn" href="https://foreveryp23.github.io/tsd2trainer/tsd2-trainer-formation-v2.2.47.apk" download>📥 下载吞食训练所 v2.2.47 APK（全新包名·可与旧版并存，约 11.2 MB）<span style="display:inline-block;margin-left:10px;padding-left:10px;border-left:1px solid rgba(255,255,255,.28);font-size:12px;font-weight:400;color:rgba(255,255,255,.82);white-space:nowrap">已被下载 <b id="tsd2-dl-count" style="color:#ffd24a">…</b> 次 · 历史累计</span></a>
       <a class="btn sec" href="https://tsd2-web.pages.dev/" target="_blank" rel="noopener">🌐 网页版直接游玩（Cloudflare Pages）</a>
       <!-- v2.1.37 起：底包/更新包相关模块不再公开展示（保留代码，不启用） -->
       <a class="btn" style="background:#1f7a3d;display:none" href="https://github.com/foreveryp23/tsd2trainer/releases/download/v2.1.34/tsd2-source.bin">📦 源码 · 全量底包（首次下载用）</a>
@@ -90,7 +90,7 @@
     })();
     </script>
     <div class="note" style="border-left-color:#1f7a3d;">
-      <b>APK 安装说明：</b>本 v2.2.46 APK 是<b>离线 WebView 安装包</b>（包名 com.fanmade.tsd2trainerv4、正规 apksigner 签名 v1+v2+v3），和您手机里已装的旧版（com.fanmade.tsd2.formation）是<b>两个独立 App</b>——<b>无需卸载旧版即可直接安装</b>，两者数据互不干扰、可长期并存。游戏资源全部内置、纯离线运行；壳层轻量、无后台唤醒，息屏由系统正常管理（省电）。APK 内横竖屏切换跟随系统「自动旋转」设置，也可在设置里手动切换；打开时自动检测发布页最新版本，有新版本会提示跳转下载。
+      <b>APK 安装说明：</b>本 v2.2.47 APK 是<b>离线 WebView 安装包</b>（包名 com.fanmade.tsd2trainerv4、正规 apksigner 签名 v1+v2+v3），和您手机里已装的旧版（com.fanmade.tsd2.formation）是<b>两个独立 App</b>——<b>无需卸载旧版即可直接安装</b>，两者数据互不干扰、可长期并存。游戏资源全部内置、纯离线运行；壳层轻量、无后台唤醒，息屏由系统正常管理（省电）。APK 内横竖屏切换跟随系统「自动旋转」设置，也可在设置里手动切换；打开时自动检测发布页最新版本，有新版本会提示跳转下载。
     </div>
     <div class="note" style="border-left-color:#1f7a3d;display:none">
       <b>源码仓库（双包机制）：</b>源码分「全量底包 + 更新包」两种下载，配合使用即可在任何新环境恢复完整开发工程：
@@ -101,6 +101,17 @@
     </div>
 
                 
+
+                <h2>本次升级内容（v2.2.47）· 四计动效重做（离间/叛离/免策/免击） · 阵法与倒地时机修正 · 计策名单与门槛核对 · 全屏资料补全</h2>
+        <ul>
+          <li><b>战斗·离间计 / 叛离计动效重做（重制）：</b>两计改为<b>各具特色的紫色系演出</b>——<b>离间计</b>＝紫色爱心上升、紫雾光点绕身盘旋（蛊惑离间）；<b>叛离计</b>＝契约碎环崩解、倒戈符印自天落下、离心碎片迸射（倒戈易帜）。两者不再是同一套通用效果。</li>
+          <li><b>战斗·免策计动效重做（重制）：</b>改为<b>封印</b>演出——青玉封印符自天砸下、结界环向内收拢、玉色光尘升腾。</li>
+          <li><b>战斗·免击计动效重做（重制）：</b>改为<b>一口中式大铜钟自天而降、罩住目标</b>，落钟扬起尘雾、余韵钟波向外扩散。</li>
+          <li><b>战斗·阵法与倒地时机修正（修复）：</b>①<b>阵型严格跟随战斗回放时间轴</b>——此前「减员溃散 / 生门破」会在整回合结算时提前改阵，战斗画面还没演到那次阵亡、阵位就先重排了；现在按事件逐条还原，不再提前变阵。②<b>倒地立绘延后到「导致阵亡的那次行动」整段演完</b>才切换，不再提前躺下。剧情 / 神兵 / 战略 / 遭遇 / 王者之战全部适用。</li>
+          <li><b>战斗·战况文案修正：</b>暗杀计失手提示由「XX 暗杀失手！」改为「<b>暗杀 XX 失手！</b>」，主客倒装、读起来更顺。</li>
+          <li><b>计策·门槛与名单核对（调整）：</b>暗杀计 / 免击计 / 免策计 / 八卦阵<b>不再设智力门槛</b>，可用性只由<b>专属名单 + 习得等级</b>决定；四张专属名单按原版资料逐一核对、补全缺失人物（既有专属成员一并保留）。</li>
+          <li><b>武将资料·全屏信息补全（修复）：</b>编成 / 武将管理界面点开武将全屏资料时，<b>只要该武将能用暗杀计 / 免击计 / 免策计或八卦阵，就必定列出</b>，不再因「只显示最新三项」被截掉。</li>
+        </ul>
 
                 <h2>本次升级内容（v2.2.46）· 计策演出修正 + 铜雀三姬强化</h2>
         <ul>
