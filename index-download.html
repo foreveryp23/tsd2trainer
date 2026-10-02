@@ -45,9 +45,9 @@
 </script></head>
 <body>
   <div class="wrap">
-    <h1>吞食训练所 v2.2.50</h1>
+    <h1>吞食训练所 v2.2.51</h1>
     <p>
-      <span class="badge">v2.2.50</span>
+      <span class="badge">v2.2.51</span>
       <span class="badge">包名 com.fanmade.tsd2trainerv4</span>
       <span class="badge">签名 tsd2（apksigner v1+v2+v3）</span>
     </p>
@@ -60,7 +60,7 @@
     </div>
 
     <p>
-      <a class="btn" href="https://foreveryp23.github.io/tsd2trainer/tsd2-trainer-formation-v2.2.50.apk" download>📥 下载吞食训练所 v2.2.50 APK（全新包名·可与旧版并存，约 11.2 MB）<span style="display:inline-block;margin-left:10px;padding-left:10px;border-left:1px solid rgba(255,255,255,.28);font-size:12px;font-weight:400;color:rgba(255,255,255,.82);white-space:nowrap">已被下载 <b id="tsd2-dl-count" style="color:#ffd24a">…</b> 次 · 历史累计</span></a>
+      <a class="btn" href="https://foreveryp23.github.io/tsd2trainer/tsd2-trainer-formation-v2.2.51.apk" download>📥 下载吞食训练所 v2.2.51 APK（全新包名·可与旧版并存，约 11.2 MB）<span style="display:inline-block;margin-left:10px;padding-left:10px;border-left:1px solid rgba(255,255,255,.28);font-size:12px;font-weight:400;color:rgba(255,255,255,.82);white-space:nowrap">已被下载 <b id="tsd2-dl-count" style="color:#ffd24a">…</b> 次 · 历史累计</span></a>
       <a class="btn sec" href="https://tsd2-web.pages.dev/" target="_blank" rel="noopener">🌐 网页版直接游玩（Cloudflare Pages）</a>
       <!-- v2.1.37 起：底包/更新包相关模块不再公开展示（保留代码，不启用） -->
       <a class="btn" style="background:#1f7a3d;display:none" href="https://github.com/foreveryp23/tsd2trainer/releases/download/v2.1.34/tsd2-source.bin">📦 源码 · 全量底包（首次下载用）</a>
@@ -90,7 +90,7 @@
     })();
     </script>
     <div class="note" style="border-left-color:#1f7a3d;">
-      <b>APK 安装说明：</b>本 v2.2.50 APK 是<b>离线 WebView 安装包</b>（包名 com.fanmade.tsd2trainerv4、正规 apksigner 签名 v1+v2+v3），和您手机里已装的旧版（com.fanmade.tsd2.formation）是<b>两个独立 App</b>——<b>无需卸载旧版即可直接安装</b>，两者数据互不干扰、可长期并存。游戏资源全部内置、纯离线运行；壳层轻量、无后台唤醒，息屏由系统正常管理（省电）。APK 内横竖屏切换跟随系统「自动旋转」设置，也可在设置里手动切换；打开时自动检测发布页最新版本，有新版本会提示跳转下载。
+      <b>APK 安装说明：</b>本 v2.2.51 APK 是<b>离线 WebView 安装包</b>（包名 com.fanmade.tsd2trainerv4、正规 apksigner 签名 v1+v2+v3），和您手机里已装的旧版（com.fanmade.tsd2.formation）是<b>两个独立 App</b>——<b>无需卸载旧版即可直接安装</b>，两者数据互不干扰、可长期并存。游戏资源全部内置、纯离线运行；壳层轻量、无后台唤醒，息屏由系统正常管理（省电）。APK 内横竖屏切换跟随系统「自动旋转」设置，也可在设置里手动切换；打开时自动检测发布页最新版本，有新版本会提示跳转下载。
     </div>
     <div class="note" style="border-left-color:#1f7a3d;display:none">
       <b>源码仓库（双包机制）：</b>源码分「全量底包 + 更新包」两种下载，配合使用即可在任何新环境恢复完整开发工程：
@@ -101,6 +101,13 @@
     </div>
 
                 
+
+                <h2>本次升级内容（v2.2.51）· 提前倒地彻底修复（第三层根因）</h2>
+        <ul>
+          <li><b>战斗·提前倒地彻底修复（修复）：</b>v2.2.47 / v2.2.49 已解决前两层根因，但仍有一条漏网路径——<b>「本回合稍后才会阵亡的武将，在自己那次行动打完之后，会被当场写回倒地姿」</b>，紧接着的下一次战场重绘又把它按站姿重建，表现出来就是「先闪一下倒地、马上又站起来」，等真正致命的那次行动来了才真正倒地。根因是攻击者<b>收招姿态</b>此前读的是引擎的实时存活标记，而战斗回放期间该标记已经是<b>本回合结束后的终值</b>。现改为收招时用与立绘<b>同源的统一倒地判定即时现算</b>，与本回合真实进度完全一致。</li>
+          <li><b>战斗·回放开场快照补齐（修复）：</b>回放开始的第一帧此前没有快照，会短暂回落到引擎实时值（同样是回合末终值），使本回合将阵亡者在开场就被画成倒地。现改为在<b>每个战斗回放入口</b>都先取一份「本批事件之前」的快照注入回放——<b>回合结算 / 先手白打 / 王者之战对战回放</b>三处全覆盖——开场第一帧即为正确的回合初状态。</li>
+          <li><b>覆盖范围与影响面：</b>剧情模式 / 神兵逐鹿 / 战略模式 / 遭遇战 / 王者之战 全模式一致生效；本次仅动<b>战斗表现层</b>，<b>不涉及任何数值与伤害公式</b>。</li>
+        </ul>
 
                 <h2>本次升级内容（v2.2.50）· 兵力模型对齐参考人物（38 名武将）</h2>
         <ul>
