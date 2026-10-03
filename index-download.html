@@ -45,9 +45,9 @@
 </script></head>
 <body>
   <div class="wrap">
-    <h1>吞食训练所 v2.2.54</h1>
+    <h1>吞食训练所 v2.2.55</h1>
     <p>
-      <span class="badge">v2.2.54</span>
+      <span class="badge">v2.2.55</span>
       <span class="badge">包名 com.fanmade.tsd2trainerv4</span>
       <span class="badge">签名 tsd2（apksigner v1+v2+v3）</span>
     </p>
@@ -60,7 +60,7 @@
     </div>
 
     <p>
-      <a class="btn" href="https://foreveryp23.github.io/tsd2trainer/tsd2-trainer-formation-v2.2.54.apk" download>📥 下载吞食训练所 v2.2.54 APK（全新包名·可与旧版并存，约 11.2 MB）<span style="display:inline-block;margin-left:10px;padding-left:10px;border-left:1px solid rgba(255,255,255,.28);font-size:12px;font-weight:400;color:rgba(255,255,255,.82);white-space:nowrap">已被下载 <b id="tsd2-dl-count" style="color:#ffd24a">…</b> 次 · 历史累计</span></a>
+      <a class="btn" href="https://foreveryp23.github.io/tsd2trainer/tsd2-trainer-formation-v2.2.55.apk" download>📥 下载吞食训练所 v2.2.55 APK（全新包名·可与旧版并存，约 11.2 MB）<span style="display:inline-block;margin-left:10px;padding-left:10px;border-left:1px solid rgba(255,255,255,.28);font-size:12px;font-weight:400;color:rgba(255,255,255,.82);white-space:nowrap">已被下载 <b id="tsd2-dl-count" style="color:#ffd24a">…</b> 次 · 历史累计</span></a>
       <a class="btn sec" href="https://tsd2-web.pages.dev/" target="_blank" rel="noopener">🌐 网页版直接游玩（Cloudflare Pages）</a>
       <!-- v2.1.37 起：底包/更新包相关模块不再公开展示（保留代码，不启用） -->
       <a class="btn" style="background:#1f7a3d;display:none" href="https://github.com/foreveryp23/tsd2trainer/releases/download/v2.1.34/tsd2-source.bin">📦 源码 · 全量底包（首次下载用）</a>
@@ -90,7 +90,7 @@
     })();
     </script>
     <div class="note" style="border-left-color:#1f7a3d;">
-      <b>APK 安装说明：</b>本 v2.2.54 APK 是<b>离线 WebView 安装包</b>（包名 com.fanmade.tsd2trainerv4、正规 apksigner 签名 v1+v2+v3），和您手机里已装的旧版（com.fanmade.tsd2.formation）是<b>两个独立 App</b>——<b>无需卸载旧版即可直接安装</b>，两者数据互不干扰、可长期并存。游戏资源全部内置、纯离线运行；壳层轻量、无后台唤醒，息屏由系统正常管理（省电）。APK 内横竖屏切换跟随系统「自动旋转」设置，也可在设置里手动切换；打开时自动检测发布页最新版本，有新版本会提示跳转下载。
+      <b>APK 安装说明：</b>本 v2.2.55 APK 是<b>离线 WebView 安装包</b>（包名 com.fanmade.tsd2trainerv4、正规 apksigner 签名 v1+v2+v3），和您手机里已装的旧版（com.fanmade.tsd2.formation）是<b>两个独立 App</b>——<b>无需卸载旧版即可直接安装</b>，两者数据互不干扰、可长期并存。游戏资源全部内置、纯离线运行；壳层轻量、无后台唤醒，息屏由系统正常管理（省电）。APK 内横竖屏切换跟随系统「自动旋转」设置，也可在设置里手动切换；打开时自动检测发布页最新版本，有新版本会提示跳转下载。
     </div>
     <div class="note" style="border-left-color:#1f7a3d;display:none">
       <b>源码仓库（双包机制）：</b>源码分「全量底包 + 更新包」两种下载，配合使用即可在任何新环境恢复完整开发工程：
@@ -101,6 +101,16 @@
     </div>
 
                 
+
+                <h2>本次升级内容（v2.2.55）· 王者之战装备按兵种拦截 · 无双关 BOSS 神器不再清一色倚天剑</h2>
+        <ul>
+          <li><b>王者之战换装不再「乱配武器」（修复）：</b>网络对战的三个模式（好友对战 / 人机对战 / 第三子模式）在<b>调整装备</b>界面此前<b>完全不校验兵种</b>——枪将马超可以被换成剑类武器，刀将也能拿弓，装备完照样生效。现按剧情模式同款规则<b>拦截</b>：不兼容的武器点不下去，只会弹出「<b>无法装备：需 枪 类武器</b>」提示，<b>背包与装备状态零变更</b>（不会出现"扣了仓库却穿不上"）。</li>
+          <li><b>武器列表补上兵种角标：</b>此前列表只写武器名（「闪电剑」），看不出是哪一类，换装时无从判断。现在<b>装备槽与仓库的每件武器后面都标出兵种</b>（剑 / 刀 / 枪 / 斧 / 弓），仓库里<b>本将用不了的件直接置灰</b>，装备槽标题也加了一行「<b>可用 枪</b>」提示。</li>
+          <li><b>无双关 BOSS 的神器武器以前清一色是倚天剑（潜在缺陷修复）：</b>无双关 BOSS 战会按 50% 概率给敌将配神器武器，但那段代码<b>只看槽位、不看兵种</b>，取的恒是武器表里的第一件稀有武器 = <b>倚天剑（剑）</b> —— 于是<b>枪将、刀将、斧将、弓将的 BOSS 统统拿着剑</b>，和文件里写死的契约「刀将绝不会配到剑」直接冲突。现按敌将<b>自身兵种</b>发放：剑将→倚天剑、刀将→<b>偃月刀</b>、枪将→<b>黑龙枪</b>、斧将→<b>薄刃斧</b>、弓将→<b>养由弓</b>。</li>
+          <li><b>连带修复·神器掉落面从 1 种扩到 5 种：</b>神器是<b>按敌方实际装备</b>掉落的，而敌人身上永远只有倚天剑，导致 5 把武器类神器里玩家<b>实际只刷得到 1 把</b>。修复后五类武器的神器都能正常掉落。</li>
+          <li><b>不受影响的部分：</b>① 王者之战的<b>默认自动配装本来就是对的</b>（按兵种走），本次只补互动换装的拦截与标识；② <b>神兵逐鹿与其余段位的 BOSS 依旧一件神器都不发</b>（既有设计，本版已回归验证）；③ 若某兵种恰好没有可发的神器，该槽<b>本轮不发、优雅降级</b>到普通武器，不会空手也不会配错。</li>
+          <li><b>本版同时包含上一版「陷阱计改为扣当前兵力的一半」的修复</b>——装这一个包即可，无需再单独装上一版。</li>
+        </ul>
 
                 <h2>本次升级内容（v2.2.54）· 陷阱计改为扣「当前兵力」的一半</h2>
         <ul>
