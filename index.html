@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#000">
+<meta name="mobile-web-app-capable" content="yes">
+<title>吞食训练所</title>
+<link rel="stylesheet" href="css/fc.css">
+    <link rel="stylesheet" href="strategic/strategic.css">
+<script src="https://beacon.cdn.qq.com/sdk/4.5.9/beacon_web.min.js"></script>
+<script>
+(function(){
+  try{
+    var beacon=new BeaconAction({
+      appkey:'0WEB06U85YBSLJNL',
+      versionCode:'1.0.0',
+      channelID:'share',
+      delay:1000,
+      sessionDuration:30*60*1000,
+      isOversea:false,
+      needReportRqdEvent:false
+    });
+    beacon.onDirectUserAction('preview_page_view',{
+      'url':location.href,
+      'referrer':document.referrer,
+      'title':document.title,
+      'sandbox_id':'0d0d033c41dc48c6b384927f5821c6d5'
+    });
+  }catch(e){}
+})();
+</script><style>
+/* v2.1.46 音乐预加载进度界面 */
+/* v2.1.55：预载界面套 fc.css（黑底白框 + 橙条 + CJK 字体），与游戏内窗口风格统一 */
+#sc-preload{background:#000}
+#sc-preload.on{display:flex;align-items:center;justify-content:center}
+#sc-preload .preload-box{width:78%;max-width:420px;text-align:center;color:var(--c-white);font-family:var(--font-cjk);background:#000;border:2px solid var(--c-white);padding:14px 16px}
+#sc-preload .preload-title{font-size:20px;font-weight:700;letter-spacing:2px;margin-bottom:8px;color:var(--c-white)}
+#sc-preload .preload-sub{font-size:12px;color:var(--c-white);opacity:.6;margin-bottom:18px;line-height:1.6}
+#sc-preload .preload-bar{width:100%;height:16px;background:#000;border:2px solid var(--c-white);border-radius:8px;overflow:hidden}
+#sc-preload .preload-fill{height:100%;width:0;background:var(--c-orange);transition:width .18s ease}
+#sc-preload .preload-status{margin-top:10px;font-size:12px;color:var(--c-white);opacity:.7}
+</style></head>
+<body>
+
+<div id="cabinet">
+  <div id="screen-wrap">
+    <div id="fc-screen">
+
+      <!-- ============ 标题 ============ -->
+      <!-- ============ 开场免责声明（v2.1.59：黑场渐显四行字 → 等主菜单 BGM 载入 → 淡出）============ -->
+      <section class="scene" id="sc-splash">
+        <div class="splash-box">
+          <div class="splash-line">本作属于饭制二创</div>
+          <div class="splash-line">仅供学习交流之用</div>
+          <div class="splash-line">严禁传播倒卖售卖</div>
+          <div class="splash-line">请勿沉迷长久游玩</div>
+        </div>
+      </section>
+
+      <section class="scene" id="sc-title">
+        <img class="title-img" src="assets/fc/title.jpg" alt="">
+        <div class="title-art">
+          <div class="t-jp">訓練所 Ⅱ</div>
+          <div class="t-cn">吞 食 训 练 所</div>
+          <div class="t-sub">战 术 训 练 模 拟</div>
+        </div>
+        <div class="win title-menu">
+          <div class="mi" data-act="start">开 始 训 练</div>
+          <!-- v2.1.34：战略模式提为第二项（紧跟「开始训练」），原列第四 -->
+          <div class="mi" data-act="strategic">战 略 模 式</div>
+          <div class="mi" data-act="formation">阵 图 兵 略</div>
+          <div class="mi" data-act="gallery">群 雄 览 录</div>
+          <div class="mi" data-act="help">操 作 说 明</div>
+        </div>
+        <div class="t-copy">FAN-MADE TRAINING SIM · 非官方同人</div>
+        <div class="t-ver">v2.0.1</div>
+      </section>
+
+      <!-- ============ 选将 ============ -->
+      <section class="scene" id="sc-select">
+        <div class="win w-tabs" id="k-tabs"></div>
+        <div class="win w-roster" id="w-roster">
+          <div class="roster-head"><span>武将</span><span>武</span><span>智</span><span>速</span></div>
+          <div class="roster-body" id="roster"></div>
+          <div class="roster-page" id="roster-page"><span class="rp-fixed" id="rp-fixed"></span><span class="rp-scroll" id="rp-scroll"><span class="rp-inner" id="rp-inner"></span></span></div>
+        </div>
+        <div class="win w-detail" id="detail"></div>
+        <div class="win w-party">
+          <div class="party-title" id="party-title"></div>
+          <div class="party-slots" id="party-slots"></div>
+        </div>
+        <div class="win w-buffs" id="buff-list"></div>
+        <!-- v2.1.0：影武者难度自选 + 孤狼收编进度已移至「出阵」界面（pickStage），
+             此处还原为纯组队 buff 框，不再挂载难度/孤狼窗口。 -->
+        <div class="win w-selbtn">
+          <div class="mi" data-act="formation">阵形</div>
+          <div class="mi" data-act="scout">侦察</div>
+          <div class="mi" data-act="stage">出阵</div>
+          <div class="mi" data-act="equip">装备</div>
+          <div class="mi" data-act="back">返回</div>
+        </div>
+      </section>
+
+      <!-- ============ 战斗 ============ -->
+      <section class="scene" id="sc-battle">
+        <div class="bt-field" id="bt-field">
+          <!-- FC 原版布局：上方 2/3（0~160px）给敌我阵营，下方 1/3（163~237px）给指令区。
+               我方在左（立绘 scaleX(-1) 转身朝右），敌方在右（立绘原朝左）。
+               每侧 5 槽，槽内含横排姓名、兵力数字、立绘、粗血条；
+               兵力数字与血条共用同一条视觉中线（见 fc.css 的 .sol / .hpbar）。
+               血条长度按本阵营 5 人兵力上限比例决定，最长不超过最前站位。 -->
+          <div class="bt-line ally" id="bt-allies"></div>
+          <div class="bt-line enemy" id="bt-enemies"></div>
+        </div>
+        <!-- 总攻提示条已废弃：总攻状态改由「双方全员前压成一字」这一画面语言表达，
+             不再占用屏幕空间。元素保留仅为兼容旧调用，CSS 里恒为 display:none。 -->
+        <div id="bt-autoflag" class="hidden"></div>
+        <!-- 下方指令区。右侧同一矩形里叠了三层框，从下到上：
+               w-msg 战况（常驻底层） → w-cmd 指令框 → w-sub 谋略/部将二级菜单。
+             默认露出的是战况；轮到下令时指令框自动盖上来，按 B 收起、按 A 再唤出。
+             左侧 52px 窄列：上为发令武将头像（顶对齐指令框），下为「某某的指令」（底对齐指令框）。 -->
+        <div class="bt-actor-face hidden" id="bt-actor-face"></div>
+        <div class="win w-msg" id="bt-msg"><div class="msg-inner" id="msg-inner"></div></div>
+        <div class="win w-cmd hidden" id="bt-cmd"></div>
+        <div class="win w-sub hidden" id="bt-sub"></div>
+        <div class="bt-actor hidden" id="bt-actor"></div>
+      </section>
+
+      <!-- 部将全屏武将信息面板：从战斗场景移出，做成与场景无关的顶层浮层，
+           这样武将管理界面点击信息框也能复用同一套详情视图。 -->
+      <div class="bt-peek-full hidden" id="bt-peek-full"></div>
+
+      <!-- ============ 群雄览录（进入游戏框架，与 .win 一致） ============ -->
+      <section class="scene" id="sc-gallery">
+        <div class="win w-gtabs" id="g-tabs"></div>
+        <div class="win w-glist">
+          <div class="glist-head"><span>武将</span><span>字</span></div>
+          <div class="glist-body" id="g-list"></div>
+          <div class="glist-page" id="g-page"></div>
+        </div>
+        <div class="win w-gdetail" id="g-detail"></div>
+        <div class="win w-gfoot" id="g-foot">
+          <button class="fb fb-b" data-key="b">B 返回</button>
+          <span class="m-hint">↑↓ 选择 · ←→ 切换势力</span>
+          <button class="fb fb-a" data-key="a">A 决定</button>
+        </div>
+      </section>
+
+      <!-- ============ Task5 黑屏过场 ============ -->
+      <section class="scene" id="sc-cutscene">
+        <div class="cs-stage">
+          <div class="cs-portrait cs-port-l" id="cs-port-l"></div>
+          <div class="cs-portrait cs-port-r" id="cs-port-r"></div>
+          <div class="cs-text" id="cs-text"></div>
+          <div class="cs-hint">A 推进 · B 跳过</div>
+        </div>
+      </section>
+
+      <!-- ============ 音乐预加载进度界面（v2.1.46：进入游戏前预载全部剧情+战略 NSF 曲） ============ -->
+      <section class="scene" id="sc-preload">
+        <div class="preload-box">
+          <div class="preload-title">正在预加载音乐</div>
+          <div class="preload-sub">首次进入需稍候数秒 · 载入完成后游戏内切换音乐不再有读取卡顿</div>
+          <div class="preload-bar"><div class="preload-fill" id="preload-fill"></div></div>
+          <div class="preload-status" id="preload-status">准备中…</div>
+        </div>
+      </section>
+
+      <!-- ============ 通用弹窗 ============ -->
+      <section class="scene" id="sc-modal">
+        <div class="win w-modal" id="modal-box"></div>
+      </section>
+
+      <!-- ============ 战略模式（吞食训练所内的玩法模式，非独立游戏） ============ -->
+      <section class="scene" id="sc-strategic">
+        <div class="st-map" id="st-map">
+          <img class="st-mapimg" src="strategic/map.png" alt="">
+          <img class="st-names" src="strategic/namelines.png" alt="">
+          <div class="st-timebar" id="st-timebar"></div>
+          <!-- 城标(.st-city)由 JS 插入；地图行动画面框 #st-fx 由 JS 使用 -->
+          <div class="st-fx" id="st-fx"></div>
+          <img class="st-cursor" id="st-cursor" src="strategic/icons/cursor_small.png" alt="">
+        </div>
+        <div class="st-panel" id="st-panel">
+          <div class="st-top" id="st-top"></div>
+          <div class="st-banner st-hidden" id="st-banner"></div>
+          <div class="st-body" id="st-body">
+            <div class="st-info" id="st-info"></div>
+            <div class="st-side" id="st-side">
+              <div class="st-cmds" id="st-cmds"></div>
+            </div>
+          </div>
+        </div>
+        <!-- 全屏层：开始/君主选择/城简况/武将列表/史册对话/转场等 -->
+        <div class="st-dialog win st-hidden" id="st-dialog"></div>
+      </section>
+
+    </div>
+  </div>
+
+  <div id="pad">
+    <div class="pad-dir">
+      <button class="pb" data-key="up">▲</button>
+      <div class="pad-mid">
+        <button class="pb" data-key="left">◀</button>
+        <button class="pb pb-c"></button>
+        <button class="pb" data-key="right">▶</button>
+      </div>
+      <button class="pb" data-key="down">▼</button>
+    </div>
+    <div class="pad-ab">
+      <button class="pb pb-fc" data-key="select">SELECT</button>
+      <button class="pb pb-fc" data-key="start">START</button>
+      <button class="pb pb-r" data-key="b">B</button>
+      <button class="pb pb-r" data-key="a">A</button>
+    </div>
+  </div>
+
+  <div id="toolbar" class="collapsed">
+    <button class="tb" id="tb-back">‹ 返回</button>
+    <button class="tb" id="tb-bgm">🎵 音乐 ON</button>
+    <button class="tb" id="tb-sfx">🔊 音效 ON</button>
+    <button class="tb" id="tb-speed">▶ 消息:中</button>
+    <button class="tb" id="tb-scale">⛶ 放大</button>
+    <button class="tb" id="tb-scale-out">⊟ 缩小</button>
+    <button class="tb" id="tb-theme">◈ 主题:默认</button>
+    <button class="tb" id="tb-pad">🎮 手柄 ON</button>
+    <button class="tb" id="tb-map">🎯 映射</button>
+    <button class="tb" id="tb-ss">▦ 屏保 ON</button>
+    <button class="tb" id="tb-orient">⟳ 横/竖</button>
+    <button class="tb" id="tb-wake">☀ 唤醒 OFF</button>
+    <button class="tb" id="tb-crt">▦ 滤镜 关</button>
+    <button class="tb" id="tb-fx">✦ 光效 ON</button>
+    <button class="tb" id="tb-motion">✦ 动效 ON</button>
+    <button class="tb web-only" id="tb-fullscreen">⛶ 全屏</button>
+    <button class="tb" id="tb-auto">⚔ 自动战斗 OFF</button>
+    <button class="tb" id="tb-sim">Σ 数据</button>
+  </div>
+  <button class="tb" id="tb-settings">⚙ 设置</button>
+</div>
+
+<script src="js/data/generals.js"></script>
+<script src="js/data/eras.js"></script>
+<script src="js/data/parties.js"></script>
+<script src="js/data/factions.js"></script>
+<script src="js/data/campaigns.js"></script>
+<script src="js/data/campaigns_fenghui.js"></script>
+<script src="js/core/arc-switch.js"></script>
+<script src="js/data/wanderers.js"></script>
+<script src="js/data/bios.js"></script>
+<script src="js/data/items.js"></script>
+<script src="js/data/buffs.js"></script>
+  <script src="js/data/tactics.js"></script>
+  <script src="js/data/troop-growth.js"></script>
+  <script src="js/core/formation.js"></script>
+  <script src="js/core/weather.js"></script>
+  <script src="js/core/stats.js"></script>
+<script src="js/core/enemy.js"></script>
+<script src="js/core/encounter.js"></script>
+<script src="js/core/battle.js"></script>
+<script src="js/audio/midisynth.js"></script>
+<script src="js/audio/apu.js"></script>
+<script src="js/audio/remastered.js"></script>
+<!-- v2.1.43：NSF 音乐欣赏（6502 CPU + APU Worklet + 内嵌 NSF 数据） -->
+<script src="js/audio/nsf/nsf-cpu.js"></script>
+<script src="js/audio/nsf/nsf-worklet-code.js"></script>
+<script src="js/audio/nsf/nsf-loops.js"></script>
+<script src="js/audio/nsf/nsf-player.js"></script>
+<script src="js/audio/nsf/nsf-data.js"></script>
+<script src="js/ui/sprites.js"></script>
+<script src="js/ui/app.js"></script>
+<script src="js/ui/cutscene.js"></script>
+<script src="js/ui/select.js"></script>
+<script src="js/ui/gallery.js"></script>
+<script src="js/ui/battle-fx.js"></script>
+<script src="js/ui/battle-ui.js"></script>
+<script src="js/ui/encounter.js"></script>
+<script src="js/vendor/supabase.min.js"></script>   <!-- v2.2.36.1：王者之战云中继后端（静态加载，规避动态 createElement('script') 注入在本页失效） -->
+<script src="js/ui/netplay.js"></script>   <!-- 网络对战（P0 离线切片）：开始训练→网络对战 -->
+<script src="js/ui/touch.js"></script>
+<script src="js/ui/gamepad.js"></script>   <!-- v2.2.36：实体手柄→虚拟手柄按键映射 -->
+    <script src="js/ui/scrolltouch.js"></script>   <!-- v2.2.14：滚轮/手指拖动滚动增强（纯加法，不动 touch.js） -->
+<script src="strategic/strategic-data.js"></script>
+<script src="strategic/st-core.js"></script>
+<script src="strategic/st-battle-engine.js"></script>
+<script src="strategic/st-world.js"></script>
+<script src="strategic/st-save.js"></script>
+<script src="strategic/st-economy.js"></script>
+<script src="strategic/st-army.js"></script>
+<script src="strategic/st-battle.js"></script>
+<script src="strategic/st-exp.js"></script>
+<script src="strategic/st-trade.js"></script>
+<script src="strategic/strategic.js"></script>
+<script>
+/* 旧 WebView（Android 5.x 等）兼容补丁：Array.prototype.includes / String.prototype.includes。 */
+if (!Array.prototype.includes) {
+  Array.prototype.includes = function(v, f) {
+    if (f === undefined) f = 0;
+    return this.indexOf(v, f) !== -1;
+  };
+}
+if (!String.prototype.includes) {
+  String.prototype.includes = function(v, f) {
+    if (f === undefined) f = 0;
+    return this.indexOf(v, f) !== -1;
+  };
+}
+</script>
+<script>window.addEventListener('load', function(){
+  App.boot();      // 先建 DOM 与输入
+  TouchUI.boot();  // 再套移动端适配（要量 #pad 实际高度，必须在 App.boot 之后）
+});</script>
+  <div id="crt-overlay"></div>
+</body>
+</html>
